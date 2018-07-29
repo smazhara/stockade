@@ -1,0 +1,14 @@
+:name: Log files
+:examples:
+  - :input: 12:34 user=Robert pn=555-123-4567 e=r@example.com l=Zwolak
+    :output:
+      - :lexeme: :email
+        :value: r@example.com
+      - :lexeme: :phone
+        :value: 555-123-4567
+      - :lexeme: :firstname
+        :value: Robert
+      - :lexeme: :surname
+        :value: Zwolak
+
+
