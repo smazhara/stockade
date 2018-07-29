@@ -8,18 +8,16 @@ module Stockade
   class Lexer
     extend Memoist
 
-    attr_reader :datum
+    attr_reader :context
 
-    def initialize(datum)
-      @datum = datum.strip.dup
+    def initialize(context)
+      @context = context.strip.dup
     end
 
-    def self.call(datum)
-      new(datum).call
+    def self.call(context)
+      new(context).call
     end
 
-    # order is important - from most specific to least
-    # the first one that matches stops the scan
     def patterns
       {
         email: email_regex,
@@ -32,7 +30,7 @@ module Stockade
       res = []
 
       patterns.each do |name, regex|
-        scanner = StringScanner.new(datum)
+        scanner = StringScanner.new(context)
 
         loop do
           break unless scanner.scan_until(regex)
@@ -50,9 +48,9 @@ module Stockade
             value: scanner.matched
           }
 
-          @datum = @datum[0..scanner.pos-scanner.matched.size] +
+          @context = @context[0..scanner.pos-scanner.matched.size] +
             '*' * scanner.matched.size +
-            @datum[scanner.pos..-1]
+            @context[scanner.pos..-1]
         end
       end
 
@@ -61,10 +59,6 @@ module Stockade
 
     def name_regex
       /\w+/
-    end
-
-    def word_regex
-      /\W+/
     end
 
     private def email_regex
@@ -78,11 +72,11 @@ module Stockade
     end
 
     private def email_address?
-      datum =~ email_regex
+      context =~ email_regex
     end
 
     private def phone_number?
-      datum =~ phone_number_regex
+      context =~ phone_number_regex
     end
 
     private def phone_regex
@@ -104,12 +98,16 @@ module Stockade
     end
 
     private def found?(db, value)
-      db(db).include?(value.downcase)
+      self.class.db(db).include?(value.downcase)
     end
 
-    private def db(name)
-      Marshal.load(File.read("data/#{name}.dump"))
+    class << self
+      extend Memoist
+
+      def db(name)
+        Marshal.load(File.read("data/#{name}.dump"))
+      end
+      memoize :db
     end
-    memoize :db
   end
 end
