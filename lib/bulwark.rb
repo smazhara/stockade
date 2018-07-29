@@ -8,7 +8,7 @@ class Bulwark
   attr_reader :datum
 
   def initialize(datum)
-    @datum = datum.strip
+    @datum = datum.strip.dup
   end
 
   def self.call(datum)
@@ -21,7 +21,7 @@ class Bulwark
     {
       email: email_regex,
       phone: phone_regex,
-      word: word_regex,
+      name: name_regex,
     }
   end
 
@@ -34,30 +34,39 @@ class Bulwark
     res = []
 
     patterns.each do |name, regex|
-      scanner.reset
+      scanner = StringScanner.new(datum)
 
       loop do
         break unless scanner.scan_until(regex)
         value = scanner.matched
 
-        if name == :word
-          name = :surname if surname?(value)
-          name = :firstname if firstname?(value)
+        lexeme = name
+        if lexeme == :name
+          lexeme = :surname if surname?(value)
+          lexeme = :firstname if firstname?(value)
         end
+        next if lexeme == :name
 
         res << {
-          lexeme: name,
-          value: scanner.matched,
-          pos: scanner.pos
+          lexeme: lexeme,
+          value: scanner.matched
         }
+
+        @datum = @datum[0..scanner.pos-scanner.matched.size] +
+          '*' * scanner.matched.size +
+          @datum[scanner.pos..-1]
       end
     end
 
     res
   end
 
-  def word_regex
+  def name_regex
     /\w+/
+  end
+
+  def word_regex
+    /\W+/
   end
 
   private def email_regex
@@ -79,7 +88,7 @@ class Bulwark
   end
 
   private def phone_regex
-    /\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*/
+    /\b(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\b/
   end
 
   private def surname?(value)

@@ -3,7 +3,7 @@ require 'bulwark'
 
 RSpec.describe Bulwark do
   it do
-    puts Bulwark.call('zxcv foo@bar.com zxcv')
+    Bulwark.call('zxcv foo@bar.com zxcv')
   end
 
   describe 'email address detection' do
@@ -78,11 +78,24 @@ RSpec.describe Bulwark do
   describe 'multiple matches' do
     it 'matches them all' do
       expect(Bulwark.call(
-        '12:34 user=Robert pn=555-123-4567 e=r@example.com'
+        '12:34 user=Robert pn=555-123-4567 e=r@example.com l=Zwolak'
       )).to eq([
-        {type: :firstname},
-        {type: :phone},
-        {type: :email}
+        {
+          lexeme: :email,
+          value: 'r@example.com'
+        },
+        {
+          lexeme: :phone,
+          value: '555-123-4567'
+        },
+        {
+          lexeme: :firstname,
+          value: 'Robert'
+        },
+        {
+          lexeme: :surname,
+          value: 'Zwolak'
+        }
       ])
     end
   end
