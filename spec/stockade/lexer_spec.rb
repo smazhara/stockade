@@ -1,9 +1,9 @@
 require 'bundler/setup'
-require 'bulwark'
+require 'stockade'
 
-RSpec.describe Bulwark do
+RSpec.describe Stockade::Lexer do
   it do
-    Bulwark.call('zxcv foo@bar.com zxcv')
+    Stockade::Lexer.call('zxcv foo@bar.com zxcv')
   end
 
   describe 'email address detection' do
@@ -11,12 +11,11 @@ RSpec.describe Bulwark do
       email.strip!
 
       it "detects #{email} as email" do
-        expect(Bulwark.call(email)).to eq(
+        expect(Stockade::Lexer.call(email)).to eq(
           [
             {
               lexeme: :email,
-              value: email,
-              pos: 0
+              value: email
             }
           ]
         )
@@ -29,12 +28,11 @@ RSpec.describe Bulwark do
       phone_number.strip!
 
       it "detects '#{phone_number}' as phone number" do
-        expect(Bulwark.call(phone_number)).to eq(
+        expect(Stockade::Lexer.call(phone_number)).to eq(
           [
             {
               lexeme: :phone,
-              value: phone_number,
-              pos: 0
+              value: phone_number
             }
           ]
         )
@@ -47,12 +45,11 @@ RSpec.describe Bulwark do
       surname.strip!
 
       it "detects '#{surname}' as a surname" do
-        expect(Bulwark.call(surname)).to eq(
+        expect(Stockade::Lexer.call(surname)).to eq(
           [
             {
               lexeme: :surname,
-              value: surname,
-              pos: 0
+              value: surname
             }
           ]
         )
@@ -65,11 +62,10 @@ RSpec.describe Bulwark do
       firstname.strip!
 
       it "detects '#{firstname}' as a firstname" do
-        expect(Bulwark.call(firstname)).to eq([
+        expect(Stockade::Lexer.call(firstname)).to eq([
           {
             lexeme: :firstname,
-            value: firstname,
-            pos: 0
+            value: firstname
           }])
       end
     end
@@ -77,7 +73,7 @@ RSpec.describe Bulwark do
 
   describe 'multiple matches' do
     it 'matches them all' do
-      expect(Bulwark.call(
+      expect(Stockade::Lexer.call(
         '12:34 user=Robert pn=555-123-4567 e=r@example.com l=Zwolak'
       )).to eq([
         {

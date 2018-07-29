@@ -1,9 +1,11 @@
+#!/usr/bin/env ruby
+
 # Make bloomfilter and dump it for future use
 #
-# http://mbejda.github.io/
+require 'bundler/setup'
+
 require 'csv'
 require 'bloomfilter-rb'
-require 'pry-byebug'
 
 def load(type)
   bf = BloomFilter::Native.new(
