@@ -28,11 +28,6 @@ module Stockade
       }
     end
 
-    def scanner
-      StringScanner.new(datum)
-    end
-    memoize :scanner
-
     def call
       res = []
 
@@ -91,7 +86,13 @@ module Stockade
     end
 
     private def phone_regex
-      /\b(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\b/
+      /
+        (?:\+?(\d{1,3}))?
+        [-. (]*(\d{3})[-. )]*
+        (\d{3})[-. ]*
+        (\d{4})
+        (?:\s*x(\d+))?
+      /x
     end
 
     private def surname?(value)

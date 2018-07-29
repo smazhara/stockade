@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     stockade (0.1.0)
-      bloomfilter-rb
-      memoist
+      bloomfilter-rb (~> 2.0)
+      memoist (~> 0.1)
 
 GEM
   remote: https://rubygems.org/

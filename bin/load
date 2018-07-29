@@ -27,11 +27,12 @@ def load(type)
     end
   end
 
+  puts bf.stats
+
   dump = Marshal.dump(bf)
 
   File.write("data/#{type}.dump", dump)
 
-  df = Marshal.load(File.read("data/#{type}.dump"))
 end
 
 load('surnames')
