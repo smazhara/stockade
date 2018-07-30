@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module Stockade
   module Lexemes
+    # Email lexeme
     class Email < Base
       def self.regex
         /

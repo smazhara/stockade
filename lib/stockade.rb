@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'memoist'
 
 require 'stockade/version'
@@ -10,6 +12,6 @@ require 'stockade/lexemes/word'
 require 'stockade/lexemes/lastname'
 require 'stockade/lexemes/firstname'
 
-
+# Stockade module
 module Stockade
 end

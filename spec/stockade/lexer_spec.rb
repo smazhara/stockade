@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require 'bundler/setup'
 require 'stockade'
 require 'yaml'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe Stockade::Lexer do
-  describe "complete contexts" do
+  describe 'complete contexts' do
     spec = YAML.load_file('spec/fixtures/contexts.yaml')
 
     context spec[:name] do
@@ -11,12 +14,12 @@ RSpec.describe Stockade::Lexer do
         it "parses '#{example[:input]}'" do
           expect(Stockade::Lexer.call(example[:input]))
             .to eq(
-              example[:output].map do |spec|
-                class_name = spec[:lexeme].to_s.capitalize
+              example[:output].map do |output|
+                class_name = output[:lexeme].to_s.capitalize
                 Object.const_get("Stockade::Lexemes::#{class_name}")
-                  .new(spec[:value])
+                  .new(output[:value])
               end
-          )
+            )
         end
       end
     end
@@ -56,3 +59,4 @@ RSpec.describe Stockade::Lexer do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

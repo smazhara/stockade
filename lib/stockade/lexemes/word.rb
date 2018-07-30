@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module Stockade
   module Lexemes
+    # Word lexeme - abstract class. Used by `Firstname` and `Lastname`.
     class Word < Base
       def self.regex
         /
@@ -21,10 +24,13 @@ module Stockade
 
         def dict_name; end
 
+        # rubocop:disable Security/MarshalLoad
+        # This is trusted source (see `bin/load`)
         def dict
           return unless dict_name
           Marshal.load(File.read("data/#{dict_name}.dump"))
         end
+        # rubocop:enable Security/MarshalLoad
         memoize :dict
       end
     end

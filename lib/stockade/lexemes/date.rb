@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module Stockade
   module Lexemes
+    # Date lexeme
     class Date < Base
       class << self
         def regex
@@ -15,7 +18,7 @@ module Stockade
         end
 
         def delim
-          /[\s\.\-\/]/
+          %r{[\s\.\-\/]}
         end
       end
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 # Make bloomfilter and dump it for future use
 #
@@ -7,13 +8,14 @@ require 'bundler/setup'
 require 'csv'
 require 'bloomfilter-rb'
 
+# rubocop:disable Metrics/MethodLength
 def load(type)
   bf = BloomFilter::Native.new(
-    :size => 10_000_000,
-    :hashes => 2,
-    :seed => 1,
-    :bucket => 3,
-    :raise => false
+    size: 10_000_000,
+    hashes: 2,
+    seed: 1,
+    bucket: 3,
+    raise: false
   )
 
   Dir.glob("data/#{type}/*.csv").each do |file|
@@ -32,8 +34,8 @@ def load(type)
   dump = Marshal.dump(bf)
 
   File.write("data/#{type}.dump", dump)
-
 end
+# rubocop:enable Metrics/MethodLength
 
 load('lastnames')
 load('firstnames')

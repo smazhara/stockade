@@ -1,9 +1,17 @@
+# frozen_string_literal: true
+
 require 'bloomfilter-rb'
 require 'memoist'
 require 'strscan'
 require 'pry-byebug'
 
 module Stockade
+  # Class Lexer
+  #
+  # Usage `Stockade::Lexer.call(context)`
+  #
+  # Returns list of found lexemes.
+  #
   class Lexer
     extend Memoist
 
@@ -28,20 +36,25 @@ module Stockade
     end
 
     def call
+      lexeme_classes.map do |lexeme_class|
+        tokenize(lexeme_class)
+      end.flatten
+    end
+
+    private
+
+    def tokenize(lexeme_class)
       lexemes = []
+      scanner = StringScanner.new(context)
 
-      lexeme_classes.each do |lexeme_class|
-        scanner = StringScanner.new(context)
+      loop do
+        break unless scanner.scan_until(lexeme_class.regex)
 
-        loop do
-          break unless scanner.scan_until(lexeme_class.regex)
+        lexeme = lexeme_class.new(scanner.matched)
 
-          lexeme = lexeme_class.new(scanner.matched)
+        next unless lexeme.valid?
 
-          next unless lexeme.valid?
-
-          lexemes << lexeme
-        end
+        lexemes << lexeme
       end
 
       lexemes
