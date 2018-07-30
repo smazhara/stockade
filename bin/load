@@ -35,5 +35,5 @@ def load(type)
 
 end
 
-load('surnames')
+load('lastnames')
 load('firstnames')

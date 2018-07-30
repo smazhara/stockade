@@ -8,7 +8,9 @@
         :value: 555-123-4567
       - :lexeme: :firstname
         :value: Robert
-      - :lexeme: :surname
+      - :lexeme: :lastname
+        :value: Robert
+      - :lexeme: :lastname
         :value: Zwolak
 
 
