@@ -6,6 +6,10 @@ module Stockade
     class Phone < Base
       # Less noisy phone mask syntax compared to regexes
       MASKS = [
+        '#-###-###-####',
+        '+#-###-###-####',
+        '+##-###-###-####',
+        '+###-###-###-####',
         '###-###-####',
         '### ### ####',
         '(## ##) #### ####',
@@ -13,7 +17,6 @@ module Stockade
         '(##) #### ####',
         '(##) ## #### ####',
         '###-###-###-####',
-        '#-###-###-####',
         '###-####',
         '(###) ###-####'
       ].freeze
@@ -33,16 +36,14 @@ module Stockade
         # Convert phone number mask to its regex
         # ### ### #### => (?:\d{3}\s\d{3}\s\d{4})
         def to_re(mask)
-          Regexp.new(
-            '(?:' +
+          '(?:' +
             mask
-              .gsub(/^#/, '\D*\d')
-              .gsub(/#/, '\d')
-              .gsub(/\s/, '\s')
-              .gsub(/\(/, '\(\s*')
-              .gsub(/\)/, '\\s*\)') +
+            .gsub('+', '\\\+')
+            .gsub(/(#+)/) { |m| "\\d{#{m.size}}" }
+            .gsub(' ', '\s')
+            .gsub('(', '\(\s*')
+            .gsub(')', '\\s*\)') +
             ')'
-          )
         end
       end
     end

@@ -19,14 +19,11 @@ module Stockade
   # Mask all PII in `text` with `*`
   #
   def self.mask(text)
-    mask = text.dup
-
-    Parser.call(Lexer.call(text)).each do |lexeme|
-      mask = mask[0..lexeme.start_pos - 1] +
-             lexeme.mask +
-             mask[lexeme.end_pos..-1]
+    lexemes = Parser.call(Lexer.call(text))
+    lexemes.inject(text) do |mask, lexeme|
+      prefix = lexeme.start_pos.zero? ? '' : mask[0..lexeme.start_pos - 1]
+      postfix = mask[lexeme.end_pos..-1]
+      "#{prefix}#{lexeme.mask}#{postfix}"
     end
-
-    mask
   end
 end
