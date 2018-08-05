@@ -6,7 +6,7 @@ require 'yaml'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe Stockade::Lexer do
-  describe 'complete contexts' do
+  xdescribe 'complete contexts' do
     spec = YAML.load_file('spec/fixtures/contexts.yaml')
 
     context spec[:name] do

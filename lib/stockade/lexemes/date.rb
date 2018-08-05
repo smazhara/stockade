@@ -8,11 +8,11 @@ module Stockade
         def regex
           /
           (?<!\d)
-           (\d{1,2})
+           (\d{1,4})
             #{delim}
-          (\d{1,2})
+          (\d{1,4})
             #{delim}
-          ((?:19|20)\d{1,2})
+          (\d{1,4})
           (?!\d)
           /x
         end
@@ -24,9 +24,9 @@ module Stockade
 
       def valid?
         possible_dates.any? &&
-        possible_dates.all? do |date|
-          date <= ::Date.today
-        end
+          possible_dates.all? do |date|
+            date <= ::Date.today
+          end
       end
 
       private
@@ -36,12 +36,13 @@ module Stockade
           begin
             ::Date.new(*permutation)
           rescue ArgumentError
+            nil
           end
         end.compact
       end
 
       def parts
-        self.class.regex.match(value)[1..-1].map(&:to_i)
+        self.class.regex.match(value).captures.map(&:to_i)
       end
     end
   end

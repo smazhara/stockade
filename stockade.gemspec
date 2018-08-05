@@ -31,6 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop'
 
-  spec.add_runtime_dependency 'bloomfilter-rb', '~> 2.0'
   spec.add_runtime_dependency 'memoist', '~> 0.1'
+  spec.add_runtime_dependency 'rambling-trie'
 end

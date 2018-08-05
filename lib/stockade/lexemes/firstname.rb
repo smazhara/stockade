@@ -3,7 +3,7 @@
 module Stockade
   module Lexemes
     # Firstname lexeme
-    class Firstname < Word
+    class Firstname < Dict
       class << self
         def dict_name
           'firstnames'

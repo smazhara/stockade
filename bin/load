@@ -1,41 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-# Make bloomfilter and dump it for future use
+# Convert plain text dictionaries to trie
 #
 require 'bundler/setup'
+require 'rambling-trie'
 
-require 'csv'
-require 'bloomfilter-rb'
-
-# rubocop:disable Metrics/MethodLength
-def load(type)
-  bf = BloomFilter::Native.new(
-    size: 10_000_000,
-    hashes: 2,
-    seed: 1,
-    bucket: 3,
-    raise: false
-  )
-
-  Dir.glob("data/#{type}/*.csv").each do |file|
-    CSV.foreach(file) do |line|
-      name = line.first
-      next if name == 'name'
-
-      name.strip!
-      name.downcase!
-      bf.insert(name) unless bf.include?(name)
-    end
-  end
-
-  puts bf.stats
-
-  dump = Marshal.dump(bf)
-
-  File.write("data/#{type}.dump", dump)
+%w[lastnames firstnames words].each do |type|
+  trie = Rambling::Trie.create("data/#{type}.txt")
+  Rambling::Trie.dump(trie, "data/#{type}.dump")
 end
-# rubocop:enable Metrics/MethodLength
-
-load('lastnames')
-load('firstnames')

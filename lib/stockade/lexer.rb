@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'bloomfilter-rb'
+require 'rambling-trie'
 require 'memoist'
 require 'strscan'
 require 'pry-byebug'
@@ -18,7 +18,7 @@ module Stockade
     attr_reader :context
 
     def initialize(context)
-      @context = context.strip.dup
+      @context = context.dup
     end
 
     def self.call(context)
@@ -30,6 +30,7 @@ module Stockade
         Stockade::Lexemes::Date,
         Stockade::Lexemes::Email,
         Stockade::Lexemes::Phone,
+        Stockade::Lexemes::Word,
         Stockade::Lexemes::Firstname,
         Stockade::Lexemes::Lastname
       ]
@@ -47,17 +48,14 @@ module Stockade
       lexemes = []
       scanner = StringScanner.new(context)
 
-      loop do
-        break unless scanner.scan_until(lexeme_class.regex)
-
-        lexeme = lexeme_class.new(scanner.matched)
-
-        next unless lexeme.valid?
-
-        lexemes << lexeme
+      while scanner.scan_until(lexeme_class.regex)
+        lexemes << lexeme_class.new(
+          scanner.matched,
+          scanner.pos - scanner.matched.size
+        )
       end
 
-      lexemes
+      lexemes.select(&:valid?)
     end
   end
 end
