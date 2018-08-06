@@ -16,14 +16,29 @@ require 'stockade/lexemes/firstname'
 
 # Stockade module
 module Stockade
-  # Mask all PII in `text` with `*`
-  #
-  def self.mask(text)
-    lexemes = Parser.call(Lexer.call(text))
-    lexemes.inject(text) do |mask, lexeme|
-      prefix = lexeme.start_pos.zero? ? '' : mask[0..lexeme.start_pos - 1]
-      postfix = mask[lexeme.end_pos..-1]
-      "#{prefix}#{lexeme.mask}#{postfix}"
+  class << self
+    # Mask all PII in `text` with `*`
+    #
+    def mask(text)
+      lexemes(text).inject(text) do |mask, lexeme|
+        prefix = lexeme.start_pos.zero? ? '' : mask[0..lexeme.start_pos - 1]
+        postfix = mask[lexeme.end_pos..-1]
+        "#{prefix}#{lexeme.mask}#{postfix}"
+      end
+    end
+
+    def extract(text)
+      lexemes(text).map do |lexeme|
+        {
+          lexeme.class.name.to_s.split('::').last.downcase => lexeme.value
+        }
+      end
+    end
+
+    private
+
+    def lexemes(text)
+      Parser.call(Lexer.call(text))
     end
   end
 end

@@ -6,25 +6,6 @@ require 'yaml'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe Stockade::Lexer do
-  xdescribe 'complete contexts' do
-    spec = YAML.load_file('spec/fixtures/contexts.yaml')
-
-    context spec[:name] do
-      spec[:examples].each do |example|
-        it "parses '#{example[:input]}'" do
-          expect(Stockade::Lexer.call(example[:input]))
-            .to eq(
-              example[:output].map do |output|
-                class_name = output[:lexeme].to_s.capitalize
-                Object.const_get("Stockade::Lexemes::#{class_name}")
-                  .new(output[:value])
-              end
-            )
-        end
-      end
-    end
-  end
-
   Dir.glob('spec/fixtures/*.yaml').each do |file|
     next if file == 'spec/fixtures/contexts.yaml'
 

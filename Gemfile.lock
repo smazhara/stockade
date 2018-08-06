@@ -3,7 +3,7 @@ PATH
   specs:
     stockade (0.1.1)
       memoist (~> 0.1)
-      rambling-trie
+      rambling-trie (~> 2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -57,10 +57,10 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.16)
-  pry-byebug
+  pry-byebug (~> 3.0)
   rake (~> 10.0)
   rspec (~> 3.0)
-  rubocop
+  rubocop (~> 0.5)
   stockade!
 
 BUNDLED WITH

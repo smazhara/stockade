@@ -42,6 +42,20 @@ module Stockade
       def mask
         '*' * raw_value.size
       end
+
+      def type
+        self.class.name.split('::').last.downcase.to_sym
+      end
+
+      def self.types
+        %i[date word email firstname lastname phone]
+      end
+
+      types.each do |type_name|
+        define_method :"#{type_name}?" do
+          type == type_name
+        end
+      end
     end
   end
 end

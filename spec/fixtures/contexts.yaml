@@ -1,16 +1,20 @@
-:name: Log files
-:examples:
-  - :input: 12:34 user=Robert pn=555-123-4567 e=r@example.com l=Zwolak
-    :output:
-      - :lexeme: :email
-        :value: r@example.com
-      - :lexeme: :phone
-        :value: 555-123-4567
-      - :lexeme: :firstname
-        :value: Robert
-      - :lexeme: :lastname
-        :value: Robert
-      - :lexeme: :lastname
-        :value: Zwolak
+- :name: Log files
+  :examples:
+  - 12:34 user=Robert pn=555-123-4567 e=r@example.com l=Zwolak
+  - 12:34 user=****** pn=************ e=************* l=******
 
+  - |
+    Dossier on Mr. John Stevenson DOB 1969-12-02
+    personal email jstevenson@example.com and
+    private phone number (555) 123-9488
+  - |
+    Dossier ** Mr. **** ********* DOB **********
+    personal email ********************** ***
+    ******* phone ****** **************
 
+  - and his phone is 555-123-4567.
+  - '*** his phone is ************.'
+
+  # here
+  - Mr. John Smith email is jsmith@example.com
+  - Mr. **** ***** email is ******************
