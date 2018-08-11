@@ -23,7 +23,7 @@ Stockade.mask('Mr. John Smith email is jsmith@example.com')
 Stockade.mask('and his phone is 555-123-4567.')
 #=> *** his phone is ************.
 ```
-Yes, 'and' looks like PII because there is also a lastname.
+Yes, 'and' looks like PII because it's also a lastname, but this should be fixed.
 
 ## Implementation
 
