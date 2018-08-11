@@ -8,5 +8,5 @@ require 'rambling-trie'
 
 %w[lastnames firstnames words].each do |type|
   trie = Rambling::Trie.create("data/#{type}.txt")
-  Rambling::Trie.dump(trie, "data/#{type}.dump")
+  Rambling::Trie.dump(trie, "data/#{type}.zip")
 end

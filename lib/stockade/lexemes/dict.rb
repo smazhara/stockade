@@ -33,7 +33,7 @@ module Stockade
         def dict_name; end
 
         def dict
-          Rambling::Trie.load("data/#{dict_name}.dump")
+          Rambling::Trie.load("data/#{dict_name}.zip")
         end
         memoize :dict
       end

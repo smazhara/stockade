@@ -4,6 +4,7 @@ PATH
     stockade (0.1.1)
       memoist (~> 0.1)
       rambling-trie (~> 2.0)
+      rubyzip (~> 1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -50,6 +51,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.9.0)
+    rubyzip (1.2.1)
     unicode-display_width (1.4.0)
 
 PLATFORMS
