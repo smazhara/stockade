@@ -1,4 +1,5 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/test_coverage)](https://codeclimate.com/github/codeclimate/codeclimate/test_coverage)
+[![Gem](https://img.shields.io/gem/v/stockade.svg?style=flat)](http://rubygems.org/gems/stockade"View this project in Rubygems")
 
 # PII Detector
 
