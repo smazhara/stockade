@@ -12,6 +12,10 @@ module Stockade
       def mask
         raw_value
       end
+
+      def token
+        raw_value
+      end
     end
   end
 end

@@ -4,22 +4,7 @@ module Stockade
   module Lexemes
     # Phone lexeme
     class Phone < Base
-      # Less noisy phone mask syntax compared to regexes
-      MASKS = [
-        '#-###-###-####',
-        '+#-###-###-####',
-        '+##-###-###-####',
-        '+###-###-###-####',
-        '###-###-####',
-        '### ### ####',
-        '(## ##) #### ####',
-        '##########',
-        '(##) #### ####',
-        '(##) ## #### ####',
-        '###-###-###-####',
-        '###-####',
-        '(###) ###-####'
-      ].freeze
+      MASKS = File.readlines('data/phones.txt').freeze
 
       class << self
         def regex
@@ -33,7 +18,7 @@ module Stockade
 
         private
 
-        # Convert phone number mask to its regex
+        # Convert less noisy phone mask syntax to regexes
         # ### ### #### => (?:\d{3}\s\d{3}\s\d{4})
         def to_re(mask)
           '(?:' +

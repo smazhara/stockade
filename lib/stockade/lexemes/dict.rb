@@ -27,6 +27,10 @@ module Stockade
         Word.new(value: value).valid?
       end
 
+      def capitalized?
+        raw_value[0] == raw_value[0].upcase
+      end
+
       class << self
         extend Memoist
 

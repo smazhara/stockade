@@ -27,6 +27,7 @@ module Stockade
 
     def lexeme_classes
       [
+        Stockade::Lexemes::PaymentCard,
         Stockade::Lexemes::Date,
         Stockade::Lexemes::Email,
         Stockade::Lexemes::Phone,

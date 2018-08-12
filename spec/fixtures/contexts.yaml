@@ -8,13 +8,15 @@
     personal email jstevenson@example.com and
     private phone number (555) 123-9488
   - |
-    Dossier ** Mr. **** ********* DOB **********
-    personal email ********************** ***
-    ******* phone ****** **************
+    Dossier on Mr. **** ********* DOB **********
+    personal email ********************** and
+    private phone number **************
 
   - and his phone is 555-123-4567.
-  - '*** his phone is ************.'
+  - and his phone is ************.
 
-  # here
   - Mr. John Smith email is jsmith@example.com
   - Mr. **** ***** email is ******************
+
+  - Dump credit card 4111111111111111
+  - Dump credit card ****************

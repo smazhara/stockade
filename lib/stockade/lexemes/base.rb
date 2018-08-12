@@ -43,6 +43,10 @@ module Stockade
         '*' * raw_value.size
       end
 
+      def token
+        SecureRandom.base64(raw_value.size)[0..raw_value.size - 1]
+      end
+
       def type
         self.class.name.split('::').last.downcase.to_sym
       end

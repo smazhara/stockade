@@ -4,6 +4,7 @@ lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'stockade/version'
 
+# rubocop:disable Metrics/BlockLength
 Gem::Specification.new do |spec|
   spec.name          = 'stockade'
   spec.version       = Stockade::VERSION
@@ -31,7 +32,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 0.49'
 
+  spec.add_runtime_dependency 'credit_card_validations', '~> 3.5'
   spec.add_runtime_dependency 'memoist', '~> 0.1'
   spec.add_runtime_dependency 'rambling-trie', '~> 2.0'
   spec.add_runtime_dependency 'rubyzip', '~> 1.0'
 end
+# rubocop:enable Metrics/BlockLength

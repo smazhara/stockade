@@ -13,6 +13,7 @@ require 'stockade/lexemes/dict'
 require 'stockade/lexemes/word'
 require 'stockade/lexemes/lastname'
 require 'stockade/lexemes/firstname'
+require 'stockade/lexemes/payment_card'
 
 # Stockade module
 module Stockade
@@ -20,10 +21,18 @@ module Stockade
     # Mask all PII in `text` with `*`
     #
     def mask(text)
+      process(text, :mask)
+    end
+
+    def tokenize(text)
+      process(text, :token)
+    end
+
+    def process(text, action)
       lexemes(text).inject(text) do |mask, lexeme|
         prefix = lexeme.start_pos.zero? ? '' : mask[0..lexeme.start_pos - 1]
         postfix = mask[lexeme.end_pos..-1]
-        "#{prefix}#{lexeme.mask}#{postfix}"
+        "#{prefix}#{lexeme.send(action)}#{postfix}"
       end
     end
 

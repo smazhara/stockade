@@ -75,18 +75,13 @@ module Stockade
     end
 
     def priority(lexeme)
-      lexeme_priorities.index(lexeme.class)
-    end
-
-    def lexeme_priorities
-      [
-        Lexemes::Word,
-        Lexemes::Firstname,
-        Lexemes::Lastname,
-        Lexemes::Phone,
-        Lexemes::Date,
-        Lexemes::Email
-      ]
+      if [Lexemes::Firstname, Lexemes::Lastname].include?(lexeme.class)
+        lexeme.capitalized? ? 3 : 1
+      elsif lexeme.is_a?(Lexemes::Word)
+        2
+      else
+        3
+      end
     end
   end
 end
